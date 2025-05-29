@@ -3,11 +3,11 @@ from app import app, db # Supondo que 'app' é sua instância Flask e 'db' é SQ
 import os
 
 # Carrega variáveis de ambiente do sistema
-DB_USERNAME = os.environ.get('DB_USERNAME')
-DB_PASSWORD = os.environ.get('DB_PASSWORD')
-DB_ENDPOINT = os.environ.get('DB_ENDPOINT')
-DB_NAME = os.environ.get('DB_NAME')
-DB_PORT = os.environ.get('DB_PORT', '5432')
+DB_USERNAME = "postgres"
+DB_PASSWORD = "batatinha123"
+DB_ENDPOINT = "database-1.cngwqacieilr.sa-east-1.rds.amazonaws.com"
+DB_NAME = "database-1"
+DB_PORT = "5432"
 
 if not all([DB_USERNAME, DB_PASSWORD, DB_ENDPOINT, DB_NAME]):
     print("ERRO CRÍTICO: Variáveis de ambiente do banco de dados não estão configuradas para criar tabelas.")
