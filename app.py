@@ -8,11 +8,11 @@ import os
 app = Flask (__name__)
 
 # Configuração do Banco de Dados para RDS
-DB_USERNAME = os.environ.get('DB_USERNAME')
-DB_PASSWORD = os.environ.get('DB_PASSWORD')
-DB_ENDPOINT = os.environ.get('DB_ENDPOINT') # Ex: safe-task-db.xxxx.rds.amazonaws.com
-DB_NAME = os.environ.get('DB_NAME')     # Ex: safetaskdb
-DB_PORT = os.environ.get('DB_PORT', '5432')
+DB_USERNAME = "postgres"
+DB_PASSWORD = "batatinha123"
+DB_ENDPOINT = "database-1.cngwqacieilr.sa-east-1.rds.amazonaws.com"
+DB_NAME = "database-1"
+DB_PORT = "5432"
 
 if all([DB_USERNAME, DB_PASSWORD, DB_ENDPOINT, DB_NAME]):
     app.config['SQLALCHEMY_DATABASE_URI'] = f"postgresql://{DB_USERNAME}:{DB_PASSWORD}@{DB_ENDPOINT}:{DB_PORT}/{DB_NAME}"
