@@ -3,9 +3,27 @@ from db import db
 from models import Usuario, Tarefa
 import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
+import os
 
 app = Flask (__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///dados.db"
+
+# Configuração do Banco de Dados para RDS
+DB_USERNAME = os.environ.get('DB_USERNAME')
+DB_PASSWORD = os.environ.get('DB_PASSWORD')
+DB_ENDPOINT = os.environ.get('DB_ENDPOINT') # Ex: safe-task-db.xxxx.rds.amazonaws.com
+DB_NAME = os.environ.get('DB_NAME')     # Ex: safetaskdb
+DB_PORT = os.environ.get('DB_PORT', '5432')
+
+if all([DB_USERNAME, DB_PASSWORD, DB_ENDPOINT, DB_NAME]):
+    app.config['SQLALCHEMY_DATABASE_URI'] = f"postgresql://{DB_USERNAME}:{DB_PASSWORD}@{DB_ENDPOINT}:{DB_PORT}/{DB_NAME}"
+else:
+    print("ALERTA: Variáveis de ambiente do banco de dados não configuradas. Usando SQLite local.")
+    app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///dados_fallback.db" # Fallback para dev local
+
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False # Boa prática
+# Se você usar Flask-Session ou Flask-Login, configure a SECRET_KEY:
+# app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'uma_chave_secreta_padrao_para_dev')
+
 db.init_app(app)
 
 @app.route('/')
